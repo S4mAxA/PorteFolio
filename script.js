@@ -198,7 +198,13 @@ class MatrixEffect {
     }
     
     animate() {
-        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        // Créer un dégradé pour le fond
+        const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
+        gradient.addColorStop(0, 'rgba(15, 23, 42, 0.1)');
+        gradient.addColorStop(0.5, 'rgba(30, 41, 59, 0.08)');
+        gradient.addColorStop(1, 'rgba(248, 250, 252, 0.05)');
+        
+        this.ctx.fillStyle = gradient;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
         this.ctx.fillStyle = '#8b5cf6';
@@ -564,6 +570,152 @@ const scrollObserver = new IntersectionObserver((entries) => {
 // Observer les éléments à animer
 document.querySelectorAll('.service-card, .portfolio-item, .contact-item').forEach(el => {
     scrollObserver.observe(el);
+});
+
+// Section "Ce que je sais faire" - Interactions
+const demoBtn = document.getElementById('demo-btn');
+if (demoBtn) {
+    let clickCount = 0;
+    const messages = [
+        'Interaction détectée !',
+        'JavaScript en action',
+        'Effet de particules',
+        'Animation fluide',
+        'Réactivité maximale'
+    ];
+    
+    demoBtn.addEventListener('click', () => {
+        clickCount++;
+        const message = messages[clickCount % messages.length];
+        
+        // Animation du bouton
+        demoBtn.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            demoBtn.style.transform = 'scale(1.05)';
+        }, 100);
+        
+        // Notification
+        showNotification(message, 'success');
+        
+        // Effet de particules
+        createParticleEffect(demoBtn);
+    });
+}
+
+// Fonction pour créer un effet de particules
+function createParticleEffect(element) {
+    const rect = element.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    for (let i = 0; i < 8; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+            left: ${centerX}px;
+            top: ${centerY}px;
+        `;
+        
+        document.body.appendChild(particle);
+        
+        const angle = (i / 8) * Math.PI * 2;
+        const distance = 50 + Math.random() * 30;
+        const endX = centerX + Math.cos(angle) * distance;
+        const endY = centerY + Math.sin(angle) * distance;
+        
+        particle.animate([
+            { 
+                transform: 'translate(0, 0) scale(1)',
+                opacity: 1 
+            },
+            { 
+                transform: `translate(${endX - centerX}px, ${endY - centerY}px) scale(0)`,
+                opacity: 0 
+            }
+        ], {
+            duration: 600 + Math.random() * 400,
+            easing: 'ease-out'
+        }).onfinish = () => particle.remove();
+    }
+}
+
+// Animation de typing pour la démo terminal
+const typingDemo = document.getElementById('typing-demo');
+if (typingDemo) {
+    const demoTexts = [
+        'console.log("Hello World");',
+        'const skills = ["JS", "CSS", "HTML"];',
+        'function animate() { ... }',
+        'npm install awesome-package'
+    ];
+    
+    let demoTextIndex = 0;
+    let demoCharIndex = 0;
+    let isDemoDeleting = false;
+    
+    function typeDemoText() {
+        const currentText = demoTexts[demoTextIndex];
+        
+        if (isDemoDeleting) {
+            typingDemo.textContent = currentText.substring(0, demoCharIndex - 1);
+            demoCharIndex--;
+        } else {
+            typingDemo.textContent = currentText.substring(0, demoCharIndex + 1);
+            demoCharIndex++;
+        }
+        
+        let typeSpeed = isDemoDeleting ? 30 : 80;
+        
+        if (!isDemoDeleting && demoCharIndex === currentText.length) {
+            typeSpeed = 2000; // Pause à la fin
+            isDemoDeleting = true;
+        } else if (isDemoDeleting && demoCharIndex === 0) {
+            isDemoDeleting = false;
+            demoTextIndex = (demoTextIndex + 1) % demoTexts.length;
+            typeSpeed = 1000; // Pause avant de recommencer
+        }
+        
+        setTimeout(typeDemoText, typeSpeed);
+    }
+    
+    // Démarrer l'animation de typing après un délai
+    setTimeout(typeDemoText, 2000);
+}
+
+// Animation des cartes de démo au hover
+document.querySelectorAll('.demo-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-10px) scale(1.02)';
+    });
+    
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0) scale(1)';
+    });
+});
+
+// Animation des éléments SVG
+document.querySelectorAll('.animated-svg').forEach(svg => {
+    svg.addEventListener('mouseenter', () => {
+        const circle = svg.querySelector('.svg-circle');
+        const path = svg.querySelector('.svg-path');
+        
+        if (circle) circle.style.animationDuration = '1s';
+        if (path) path.style.animationDuration = '0.8s';
+    });
+    
+    svg.addEventListener('mouseleave', () => {
+        const circle = svg.querySelector('.svg-circle');
+        const path = svg.querySelector('.svg-path');
+        
+        if (circle) circle.style.animationDuration = '3s';
+        if (path) path.style.animationDuration = '2s';
+    });
 });
 
 console.log('Portfolio Samuel - Développeur Frontend Freelance avec effet Matrix chargé avec succès ! 🚀'); 
