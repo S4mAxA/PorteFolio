@@ -277,7 +277,7 @@ body {
     align-items: center;
     position: relative;
     overflow: hidden;
-    background: var(--bg-primary);
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #f8fafc 100%);
 }
 
 
