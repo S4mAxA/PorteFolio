@@ -299,6 +299,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectCards = document.querySelectorAll('.project-card');
     
     projectCards.forEach((card, index) => {
+        // Rendre les cartes visibles par défaut
+        card.classList.add('visible');
         // Animation d'apparition avec délai
         card.style.animationDelay = `${0.1 * (index + 1)}s`;
         
@@ -351,12 +353,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Animation des cartes au scroll
+    // Animation des cartes au scroll (optionnel)
     const projectObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                // Les cartes sont déjà visibles par défaut
+                entry.target.classList.add('visible');
             }
         });
     }, { threshold: 0.1 });

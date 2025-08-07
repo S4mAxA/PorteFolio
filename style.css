@@ -784,15 +784,19 @@ section {
 
 /* Animation d'apparition pour les cartes */
 .project-card {
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.3s ease;
+}
+
+.project-card.visible {
     animation: fadeInUp 0.6s ease-out forwards;
 }
 
-.project-card:nth-child(1) { animation-delay: 0.1s; }
-.project-card:nth-child(2) { animation-delay: 0.2s; }
-.project-card:nth-child(3) { animation-delay: 0.3s; }
-.project-card:nth-child(4) { animation-delay: 0.4s; }
+.project-card:nth-child(1).visible { animation-delay: 0.1s; }
+.project-card:nth-child(2).visible { animation-delay: 0.2s; }
+.project-card:nth-child(3).visible { animation-delay: 0.3s; }
+.project-card:nth-child(4).visible { animation-delay: 0.4s; }
 
 /* Effet de brillance au hover */
 .card-front::before {
