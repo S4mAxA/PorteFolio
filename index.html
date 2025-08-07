@@ -3,19 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Samuel Lepinay - Portfolio Cybersécurité</title>
+    <title>Samuel - Développeur Frontend Freelance</title>
+    <meta name="description" content="Samuel, développeur frontend freelance spécialisé dans la création de sites web modernes et interactifs. Transformez vos idées en expériences web exceptionnelles.">
+    <meta name="keywords" content="développeur frontend, freelance, web design, React, JavaScript, CSS, HTML">
+    <meta name="author" content="Samuel">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-icon">
+                <i class="fas fa-code"></i>
+            </div>
+            <div class="loader-text">Samuel</div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <span class="logo-text">SL</span>
+                <span class="logo-text">Samuel</span>
             </div>
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="nav-menu">
                 <li class="nav-item">
                     <a href="#accueil" class="nav-link">Accueil</a>
                 </li>
@@ -23,348 +47,157 @@
                     <a href="#apropos" class="nav-link">À propos</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#competences" class="nav-link">Compétences</a>
+                    <a href="#services" class="nav-link">Services</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#projets" class="nav-link">Projets</a>
+                    <a href="#portfolio" class="nav-link">Portfolio</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#experiences" class="nav-link">Expériences</a>
+                    <a href="#temoignages" class="nav-link">Avis</a>
                 </li>
                 <li class="nav-item">
                     <a href="#contact" class="nav-link">Contact</a>
                 </li>
             </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="hamburger" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Section Accueil -->
+    <!-- Hero Section -->
     <section id="accueil" class="hero">
+        <div class="particles-bg" id="particles-bg"></div>
         <div class="hero-container">
-            <div class="hero-content">
+            <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+                <div class="hero-badge">
+                    <i class="fas fa-rocket"></i>
+                    <span>Développeur Frontend Freelance</span>
+                </div>
                 <h1 class="hero-title">
-                    <span class="highlight">Samuel Lepinay</span>
+                    <span class="hero-name">Samuel</span>
+                    <span class="hero-subtitle">Développeur Frontend</span>
                 </h1>
-                <h2 class="hero-subtitle">Étudiant en Cybersécurité</h2>
                 <p class="hero-description">
-                    Passionné par les enjeux de sécurité informatique, je recherche un stage de 2 mois minimum 
-                    à partir de mai 2025 pour découvrir concrètement les métiers du secteur.
+                    Je transforme vos idées en 
+                    <span class="typing-text" id="typing-text"></span>
                 </p>
                 <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary">Me contacter</a>
-                    <a href="#experiences" class="btn btn-secondary">Voir mes projets</a>
+                    <a href="#portfolio" class="btn btn-primary">
+                        <i class="fas fa-eye"></i>
+                        Voir mes projets
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <i class="fas fa-paper-plane"></i>
+                        Me contacter
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="50">0</span>
+                        <span class="stat-label">Projets réalisés</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="30">0</span>
+                        <span class="stat-label">Clients satisfaits</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="3">0</span>
+                        <span class="stat-label">Années d'expérience</span>
+                    </div>
                 </div>
             </div>
-            <div class="hero-image">
-                <div class="cyber-grid"></div>
+            <div class="hero-visual" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="300">
+                <div class="floating-card">
+                    <div class="card-content">
+                        <i class="fas fa-code"></i>
+                        <span>Code propre</span>
+                    </div>
+                </div>
+                <div class="floating-card">
+                    <div class="card-content">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>Responsive</span>
+                    </div>
+                </div>
+                <div class="floating-card">
+                    <div class="card-content">
+                        <i class="fas fa-bolt"></i>
+                        <span>Performance</span>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
         </div>
     </section>
 
     <!-- Section À propos -->
     <section id="apropos" class="about">
         <div class="container">
-            <h2 class="section-title">À propos de moi</h2>
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">À propos de moi</h2>
+                <p class="section-subtitle">Passionné par le développement web moderne</p>
+            </div>
             <div class="about-content">
-                <div class="about-text">
+                <div class="about-text" data-aos="fade-right" data-aos-duration="800">
+                    <h3>Qui suis-je ?</h3>
                     <p>
-                        Étudiant en cybersécurité à Guardia Cybersecurity School, je suis curieux, rigoureux 
-                        et passionné par les enjeux de sécurité informatique. Je souhaite découvrir concrètement 
-                        les métiers du secteur, notamment à travers des missions en pentesting, réseau ou 
-                        développement sécurisé.
+                        Développeur frontend freelance passionné, je crée des expériences web 
+                        modernes et interactives qui captent l'attention et convertissent. 
+                        Spécialisé dans les technologies React, JavaScript et CSS moderne, 
+                        je transforme vos idées en sites web performants et esthétiques.
                     </p>
-                    <div class="about-details">
-                        <div class="detail-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Bordeaux / Toulouse / Canada / Paris</span>
-                        </div>
-                        <div class="detail-item">
-                            <i class="fas fa-graduation-cap"></i>
-                            <span>Guardia Cybersecurity School</span>
-                        </div>
-                        <div class="detail-item">
-                            <i class="fas fa-calendar"></i>
-                            <span>Stage recherché : Mai 2025 (2 mois minimum)</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-stats">
-                    <div class="stat-item">
-                        <h3>3</h3>
-                        <p>Projets réalisés</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3>4</h3>
-                        <p>Langues maîtrisées</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3>5</h3>
-                        <p>Soft skills clés</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section Compétences -->
-    <section id="competences" class="skills">
-        <div class="container">
-            <h2 class="section-title">Compétences</h2>
-            <div class="skills-content">
-                <div class="skills-category">
-                    <h3>Soft Skills</h3>
-                    <div class="skills-grid">
-                        <div class="skill-item">
-                            <i class="fas fa-users"></i>
-                            <span>Travail d'équipe</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-clock"></i>
-                            <span>Ponctualité</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-user-check"></i>
-                            <span>Autonomie</span>
-                        </div>
-                        <div class="skill-item">
+                    <p>
+                        Mon approche combine créativité et rigueur technique pour livrer 
+                        des projets qui dépassent les attentes. Chaque ligne de code est 
+                        pensée pour offrir une expérience utilisateur exceptionnelle.
+                    </p>
+                    <div class="about-values">
+                        <div class="value-item">
                             <i class="fas fa-lightbulb"></i>
-                            <span>Ouverture à la nouveauté</span>
+                            <span>Créativité</span>
                         </div>
-                        <div class="skill-item">
-                            <i class="fas fa-search"></i>
-                            <span>Curiosité</span>
+                        <div class="value-item">
+                            <i class="fas fa-cogs"></i>
+                            <span>Performance</span>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="skills-category">
-                    <h3>Langues & Technologies</h3>
-                    <div class="skills-grid">
-                        <div class="skill-item">
-                            <i class="fas fa-language"></i>
-                            <span>Français (Natal)</span>
-                            <div class="skill-level expert"></div>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-language"></i>
-                            <span>English (Intermédiaire)</span>
-                            <div class="skill-level intermediate"></div>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-python"></i>
-                            <span>Python (Intermédiaire)</span>
-                            <div class="skill-level intermediate"></div>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-java"></i>
-                            <span>Java (Débutant)</span>
-                            <div class="skill-level beginner"></div>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-html5"></i>
-                            <span>HTML (Débutant)</span>
-                            <div class="skill-level beginner"></div>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-language"></i>
-                            <span>Español (Principiante)</span>
-                            <div class="skill-level beginner"></div>
+                        <div class="value-item">
+                            <i class="fas fa-users"></i>
+                            <span>Collaboration</span>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section Projets -->
-    <section id="projets" class="projects">
-        <div class="container">
-            <h2 class="section-title">Mes Projets</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="card-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <h3>CyberFolio</h3>
-                            <p>Portfolio en PHP avec fonctionnalités de sécurité</p>
-                            <div class="card-tech">
-                                <span class="tech-tag">PHP</span>
-                                <span class="tech-tag">MySQL</span>
-                                <span class="tech-tag">HTML</span>
-                                <span class="tech-tag">JavaScript</span>
+                <div class="about-visual" data-aos="fade-left" data-aos-duration="800">
+                    <div class="avatar-container">
+                        <div class="avatar">
+                            <div class="avatar-placeholder">
+                                <i class="fas fa-user"></i>
                             </div>
                         </div>
-                        <div class="card-back">
-                            <h4>CyberFolio</h4>
-                            <p>Création d'un portfolio dynamique en PHP avec intégration de fonctionnalités de sécurité avancées. Apprentissage complet de MySQL, PHP, HTML et JavaScript.</p>
-                            <div class="project-details">
-                                <div class="detail-item">
-                                    <i class="fas fa-calendar"></i>
-                                    <span>3 semaines</span>
-                                </div>
-                                <div class="detail-item">
-                                    <i class="fas fa-users"></i>
-                                    <span>Projet individuel</span>
-                                </div>
-                                <div class="detail-item">
-                                    <i class="fas fa-shield-alt"></i>
-                                    <span>Sécurité web</span>
-                                </div>
+                        <div class="tech-badges">
+                            <div class="tech-badge" data-tech="HTML">
+                                <i class="fab fa-html5"></i>
                             </div>
-                            <div class="project-links">
-                                <a href="#" class="project-link">
-                                    <i class="fas fa-external-link-alt"></i>
-                                    Voir le projet
-                                </a>
-                                <a href="#" class="project-link">
-                                    <i class="fab fa-github"></i>
-                                    Code source
-                                </a>
+                            <div class="tech-badge" data-tech="CSS">
+                                <i class="fab fa-css3-alt"></i>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="card-icon">
-                                <i class="fas fa-code"></i>
+                            <div class="tech-badge" data-tech="JavaScript">
+                                <i class="fab fa-js-square"></i>
                             </div>
-                            <h3>Application de Gestion</h3>
-                            <p>Application Python de gestion sécurisée</p>
-                            <div class="card-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">MySQL</span>
-                                <span class="tech-tag">JavaScript</span>
-                                <span class="tech-tag">Sécurité</span>
+                            <div class="tech-badge" data-tech="React">
+                                <i class="fab fa-react"></i>
                             </div>
-                        </div>
-                        <div class="card-back">
-                            <h4>Application de Gestion</h4>
-                            <p>Développement d'une application de gestion en Python avec sécurisation des données. Travail en équipe de 4 personnes avec gestion MySQL, Python et JavaScript.</p>
-                            <div class="project-details">
-                                <div class="detail-item">
-                                    <i class="fas fa-calendar"></i>
-                                    <span>3 semaines</span>
-                                </div>
-                                <div class="detail-item">
-                                    <i class="fas fa-users"></i>
-                                    <span>Équipe de 4</span>
-                                </div>
-                                <div class="detail-item">
-                                    <i class="fas fa-database"></i>
-                                    <span>Gestion de données</span>
-                                </div>
-                            </div>
-                            <div class="project-links">
-                                <a href="#" class="project-link">
-                                    <i class="fas fa-external-link-alt"></i>
-                                    Voir le projet
-                                </a>
-                                <a href="#" class="project-link">
-                                    <i class="fab fa-github"></i>
-                                    Code source
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="card-icon">
-                                <i class="fas fa-user-secret"></i>
-                            </div>
-                            <h3>Pentesting Lab</h3>
-                            <p>Environnement de test de sécurité</p>
-                            <div class="card-tech">
-                                <span class="tech-tag">Kali Linux</span>
-                                <span class="tech-tag">Metasploit</span>
-                                <span class="tech-tag">Wireshark</span>
-                                <span class="tech-tag">CTF</span>
-                            </div>
-                        </div>
-                        <div class="card-back">
-                            <h4>Pentesting Lab</h4>
-                            <p>Création d'un laboratoire de pentesting pour tester et améliorer les compétences en sécurité offensive. Utilisation d'outils professionnels de cybersécurité.</p>
-                            <div class="project-details">
-                                <div class="detail-item">
-                                    <i class="fas fa-calendar"></i>
-                                    <span>En cours</span>
-                                </div>
-                                <div class="detail-item">
-                                    <i class="fas fa-users"></i>
-                                    <span>Projet personnel</span>
-                                </div>
-                                <div class="detail-item">
-                                    <i class="fas fa-bug"></i>
-                                    <span>Tests de vulnérabilités</span>
-                                </div>
-                            </div>
-                            <div class="project-links">
-                                <a href="#" class="project-link">
-                                    <i class="fas fa-external-link-alt"></i>
-                                    Voir le projet
-                                </a>
-                                <a href="#" class="project-link">
-                                    <i class="fab fa-github"></i>
-                                    Code source
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="card-icon">
-                                <i class="fas fa-gamepad"></i>
-                            </div>
-                            <h3>Jeu de Sécurité</h3>
-                            <p>Jeu éducatif sur la cybersécurité</p>
-                            <div class="card-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Pygame</span>
-                                <span class="tech-tag">Éducation</span>
-                                <span class="tech-tag">Gamification</span>
-                            </div>
-                        </div>
-                        <div class="card-back">
-                            <h4>Jeu de Sécurité</h4>
-                            <p>Développement d'un jeu éducatif pour sensibiliser aux enjeux de cybersécurité. Combinaison de programmation et de pédagogie pour rendre la sécurité accessible.</p>
-                            <div class="project-details">
-                                <div class="detail-item">
-                                    <i class="fas fa-calendar"></i>
-                                    <span>À venir</span>
-                                </div>
-                                <div class="detail-item">
-                                    <i class="fas fa-users"></i>
-                                    <span>Projet personnel</span>
-                                </div>
-                                <div class="detail-item">
-                                    <i class="fas fa-graduation-cap"></i>
-                                    <span>Éducation</span>
-                                </div>
-                            </div>
-                            <div class="project-links">
-                                <a href="#" class="project-link">
-                                    <i class="fas fa-external-link-alt"></i>
-                                    Voir le projet
-                                </a>
-                                <a href="#" class="project-link">
-                                    <i class="fab fa-github"></i>
-                                    Code source
-                                </a>
+                            <div class="tech-badge" data-tech="Tailwind">
+                                <i class="fas fa-wind"></i>
                             </div>
                         </div>
                     </div>
@@ -373,72 +206,98 @@
         </div>
     </section>
 
-    <!-- Section Expériences -->
-    <section id="experiences" class="experiences">
+    <!-- Section Services -->
+    <section id="services" class="services">
         <div class="container">
-            <h2 class="section-title">Expériences & Projets</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>Création d'application</h3>
-                            <span class="timeline-date">Projet 3 semaines</span>
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Mes Services</h2>
+                <p class="section-subtitle">Des solutions web sur mesure pour votre projet</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="service-icon">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <h3>Création de site vitrine</h3>
+                            <p>Sites web modernes et attractifs pour présenter votre activité</p>
                         </div>
-                        <div class="timeline-company">Guardia Cybersecurity School</div>
-                        <ul class="timeline-description">
-                            <li>Création d'une application en Python de gestion d'application en groupe de 4</li>
-                            <li>Sécurisation des données</li>
-                            <li>Gestion MySQL, Python, JavaScript</li>
-                        </ul>
-                        <div class="timeline-tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">MySQL</span>
-                            <span class="tag">JavaScript</span>
-                            <span class="tag">Sécurité</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>CyberFolio</h3>
-                            <span class="timeline-date">Projet 3 semaines</span>
-                        </div>
-                        <div class="timeline-company">Guardia Cybersecurity School</div>
-                        <ul class="timeline-description">
-                            <li>Création du portefolio en PHP</li>
-                            <li>Apprentissage MySQL, PHP, HTML, JavaScript</li>
-                            <li>Création de sites dynamiques avec intégration de fonctionnalités de sécurité</li>
-                        </ul>
-                        <div class="timeline-tags">
-                            <span class="tag">PHP</span>
-                            <span class="tag">MySQL</span>
-                            <span class="tag">HTML</span>
-                            <span class="tag">JavaScript</span>
+                        <div class="card-back">
+                            <h4>Site Vitrine</h4>
+                            <ul>
+                                <li>Design personnalisé</li>
+                                <li>Optimisation SEO</li>
+                                <li>Responsive design</li>
+                                <li>Animations fluides</li>
+                            </ul>
+                            <div class="service-price">À partir de 1500€</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>Croupier</h3>
-                            <span class="timeline-date">Octobre - Janvier 2025</span>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="service-icon">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <h3>Refonte de site</h3>
+                            <p>Modernisation complète de votre site existant</p>
                         </div>
-                        <div class="timeline-company">Casino Barrière</div>
-                        <ul class="timeline-description">
-                            <li>Gestion du stress</li>
-                            <li>Contact client</li>
-                            <li>Travail rigoureux</li>
-                        </ul>
-                        <div class="timeline-tags">
-                            <span class="tag">Gestion du stress</span>
-                            <span class="tag">Service client</span>
-                            <span class="tag">Rigueur</span>
+                        <div class="card-back">
+                            <h4>Refonte Web</h4>
+                            <ul>
+                                <li>Audit technique</li>
+                                <li>Nouveau design</li>
+                                <li>Amélioration UX</li>
+                                <li>Optimisation performance</li>
+                            </ul>
+                            <div class="service-price">Sur devis</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="service-icon">
+                                <i class="fab fa-figma"></i>
+                            </div>
+                            <h3>Intégration Figma</h3>
+                            <p>Transformation de vos maquettes en site web fonctionnel</p>
+                        </div>
+                        <div class="card-back">
+                            <h4>Figma to Web</h4>
+                            <ul>
+                                <li>Intégration pixel-perfect</li>
+                                <li>Code propre</li>
+                                <li>Animations CSS</li>
+                                <li>Tests cross-browser</li>
+                            </ul>
+                            <div class="service-price">À partir de 800€</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="service-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <h3>Optimisation Performance</h3>
+                            <p>Amélioration de la vitesse et de l'expérience utilisateur</p>
+                        </div>
+                        <div class="card-back">
+                            <h4>Performance Web</h4>
+                            <ul>
+                                <li>Audit de performance</li>
+                                <li>Optimisation images</li>
+                                <li>Minification code</li>
+                                <li>CDN et cache</li>
+                            </ul>
+                            <div class="service-price">À partir de 500€</div>
                         </div>
                     </div>
                 </div>
@@ -446,65 +305,235 @@
         </div>
     </section>
 
-    <!-- Section Formation -->
-    <section id="formation" class="education">
+    <!-- Section Portfolio -->
+    <section id="portfolio" class="portfolio">
         <div class="container">
-            <h2 class="section-title">Formation</h2>
-            <div class="education-content">
-                <div class="education-item">
-                    <div class="education-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="education-details">
-                        <h3>Formation Cybersécurité</h3>
-                        <div class="education-school">Guardia Cybersecurity School</div>
-                        <div class="education-period">2024 - En cours</div>
-                        <p>Formation spécialisée en cybersécurité, pentesting, et développement sécurisé</p>
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Mon Portfolio</h2>
+                <p class="section-subtitle">Découvrez mes réalisations récentes</p>
+            </div>
+            <div class="portfolio-filters" data-aos="fade-up" data-aos-delay="200">
+                <button class="filter-btn active" data-filter="all">Tous</button>
+                <button class="filter-btn" data-filter="web">Sites Web</button>
+                <button class="filter-btn" data-filter="app">Applications</button>
+                <button class="filter-btn" data-filter="ui">UI/UX</button>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item" data-category="web" data-aos="fade-up" data-aos-delay="100">
+                    <div class="portfolio-card">
+                        <div class="portfolio-image">
+                            <div class="image-placeholder">
+                                <i class="fas fa-laptop"></i>
+                            </div>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <h3>Site E-commerce</h3>
+                            <p>Plateforme de vente en ligne moderne</p>
+                            <div class="portfolio-tech">
+                                <span>React</span>
+                                <span>Node.js</span>
+                                <span>Stripe</span>
+                            </div>
+                            <div class="portfolio-links">
+                                <a href="#" class="portfolio-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Voir le projet
+                                </a>
+                                <a href="#" class="portfolio-link">
+                                    <i class="fab fa-github"></i>
+                                    Code source
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="education-item">
-                    <div class="education-icon">
-                        <i class="fas fa-graduation-cap"></i>
+
+                <div class="portfolio-item" data-category="app" data-aos="fade-up" data-aos-delay="200">
+                    <div class="portfolio-card">
+                        <div class="portfolio-image">
+                            <div class="image-placeholder">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <h3>App de Gestion</h3>
+                            <p>Application web pour la gestion d'entreprise</p>
+                            <div class="portfolio-tech">
+                                <span>Vue.js</span>
+                                <span>Firebase</span>
+                                <span>Chart.js</span>
+                            </div>
+                            <div class="portfolio-links">
+                                <a href="#" class="portfolio-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Voir le projet
+                                </a>
+                                <a href="#" class="portfolio-link">
+                                    <i class="fab fa-github"></i>
+                                    Code source
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="education-details">
-                        <h3>BAC STMG</h3>
-                        <div class="education-school">Lycée Polyvalent Raymond Naves</div>
-                        <div class="education-period">2023-2024</div>
-                        <p>Baccalauréat Sciences et Technologies du Management et de la Gestion</p>
+                </div>
+
+                <div class="portfolio-item" data-category="ui" data-aos="fade-up" data-aos-delay="300">
+                    <div class="portfolio-card">
+                        <div class="portfolio-image">
+                            <div class="image-placeholder">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <h3>Design System</h3>
+                            <p>Système de design complet et cohérent</p>
+                            <div class="portfolio-tech">
+                                <span>Figma</span>
+                                <span>Storybook</span>
+                                <span>CSS</span>
+                            </div>
+                            <div class="portfolio-links">
+                                <a href="#" class="portfolio-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Voir le projet
+                                </a>
+                                <a href="#" class="portfolio-link">
+                                    <i class="fab fa-figma"></i>
+                                    Design
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="web" data-aos="fade-up" data-aos-delay="400">
+                    <div class="portfolio-card">
+                        <div class="portfolio-image">
+                            <div class="image-placeholder">
+                                <i class="fas fa-blog"></i>
+                            </div>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <h3>Blog Personnel</h3>
+                            <p>Blog moderne avec système de gestion de contenu</p>
+                            <div class="portfolio-tech">
+                                <span>Next.js</span>
+                                <span>MDX</span>
+                                <span>Vercel</span>
+                            </div>
+                            <div class="portfolio-links">
+                                <a href="#" class="portfolio-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Voir le projet
+                                </a>
+                                <a href="#" class="portfolio-link">
+                                    <i class="fab fa-github"></i>
+                                    Code source
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section Centres d'intérêt -->
-    <section id="interets" class="interests">
+    <!-- Section Témoignages -->
+    <section id="temoignages" class="testimonials">
         <div class="container">
-            <h2 class="section-title">Centres d'intérêt</h2>
-            <div class="interests-grid">
-                <div class="interest-category">
-                    <h3><i class="fas fa-gamepad"></i> Jeux Vidéo</h3>
-                    <div class="interest-items">
-                        <span class="interest-item">Die and Retry</span>
-                        <span class="interest-item">Open World</span>
-                        <span class="interest-item">Plateformeur</span>
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Avis Clients</h2>
+                <p class="section-subtitle">Ce que disent mes clients</p>
+            </div>
+            <div class="testimonials-carousel" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonial-item active">
+                    <div class="testimonial-content">
+                        <div class="testimonial-avatar">
+                            <div class="avatar-placeholder">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        <p class="testimonial-text">
+                            "Samuel a transformé notre vision en un site web exceptionnel. 
+                            Son attention aux détails et sa créativité ont dépassé nos attentes. 
+                            Le résultat est moderne, rapide et parfaitement fonctionnel."
+                        </p>
+                        <div class="testimonial-author">
+                            <h4>Marie Dubois</h4>
+                            <span>CEO, TechStart</span>
+                        </div>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
                     </div>
                 </div>
-                <div class="interest-category">
-                    <h3><i class="fas fa-code"></i> Programmation</h3>
-                    <div class="interest-items">
-                        <span class="interest-item">Développement</span>
-                        <span class="interest-item">Algorithmes</span>
+                <div class="testimonial-item">
+                    <div class="testimonial-content">
+                        <div class="testimonial-avatar">
+                            <div class="avatar-placeholder">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        <p class="testimonial-text">
+                            "Excellent travail de refonte de notre site. Samuel a su comprendre 
+                            nos besoins et livrer un projet de qualité dans les délais. 
+                            Je recommande vivement ses services !"
+                        </p>
+                        <div class="testimonial-author">
+                            <h4>Thomas Martin</h4>
+                            <span>Directeur Marketing, InnovCorp</span>
+                        </div>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
                     </div>
                 </div>
-                <div class="interest-category">
-                    <h3><i class="fas fa-user-secret"></i> Cybersécurité</h3>
-                    <div class="interest-items">
-                        <span class="interest-item">Hacking</span>
-                        <span class="interest-item">Pentesting</span>
-                        <span class="interest-item">CTF</span>
+                <div class="testimonial-item">
+                    <div class="testimonial-content">
+                        <div class="testimonial-avatar">
+                            <div class="avatar-placeholder">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        <p class="testimonial-text">
+                            "Samuel est un professionnel de talent. Son expertise technique 
+                            et sa créativité ont permis de créer un site qui nous représente 
+                            parfaitement. Un partenaire de confiance !"
+                        </p>
+                        <div class="testimonial-author">
+                            <h4>Sophie Laurent</h4>
+                            <span>Fondatrice, CreativeStudio</span>
+                        </div>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="carousel-controls">
+                <button class="carousel-btn prev" id="prev-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="carousel-dots">
+                    <span class="dot active" data-slide="0"></span>
+                    <span class="dot" data-slide="1"></span>
+                    <span class="dot" data-slide="2"></span>
+                </div>
+                <button class="carousel-btn next" id="next-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </div>
     </section>
@@ -512,54 +541,86 @@
     <!-- Section Contact -->
     <section id="contact" class="contact">
         <div class="container">
-            <h2 class="section-title">Contact</h2>
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Contactez-moi</h2>
+                <p class="section-subtitle">Prêt à démarrer votre projet ?</p>
+            </div>
             <div class="contact-content">
-                <div class="contact-info">
+                <div class="contact-info" data-aos="fade-right" data-aos-duration="800">
                     <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <h4>Téléphone</h4>
-                            <p>+33 6 29 86 73 87</p>
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
                         </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
+                        <div class="contact-details">
                             <h4>Email</h4>
-                            <p>slepinay@guardiaschool.fr</p>
+                            <p>samuel@example.com</p>
                         </div>
                     </div>
                     <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Téléphone</h4>
+                            <p>+33 6 12 34 56 78</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
                             <h4>Localisation</h4>
-                            <p>Bordeaux / Toulouse / Canada / Paris</p>
+                            <p>Paris, France</p>
                         </div>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-globe"></i>
-                        <div>
-                            <h4>Site Web</h4>
-                            <p>En cours de développement</p>
-                        </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                    </div>
+                    <div class="cv-download">
+                        <a href="#" class="btn btn-outline">
+                            <i class="fas fa-download"></i>
+                            Télécharger mon CV
+                        </a>
                     </div>
                 </div>
-                <div class="contact-form">
-                    <h3>Envoyez-moi un message</h3>
-                    <form>
+                <div class="contact-form" data-aos="fade-left" data-aos-duration="800">
+                    <form id="contact-form">
                         <div class="form-group">
-                            <input type="text" placeholder="Votre nom" required>
+                            <input type="text" id="name" name="name" required>
+                            <label for="name">Nom complet</label>
+                            <div class="form-line"></div>
                         </div>
                         <div class="form-group">
-                            <input type="email" placeholder="Votre email" required>
+                            <input type="email" id="email" name="email" required>
+                            <label for="email">Email</label>
+                            <div class="form-line"></div>
                         </div>
                         <div class="form-group">
-                            <input type="text" placeholder="Sujet" required>
+                            <input type="text" id="subject" name="subject" required>
+                            <label for="subject">Sujet</label>
+                            <div class="form-line"></div>
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="Votre message" rows="5" required></textarea>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                            <label for="message">Message</label>
+                            <div class="form-line"></div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Envoyer le message</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Envoyer le message
+                        </button>
                     </form>
                 </div>
             </div>
@@ -570,16 +631,46 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <p>&copy; 2024 Samuel Lepinay. Tous droits réservés.</p>
-                <div class="footer-social">
-                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <div class="footer-section">
+                    <h3>Samuel</h3>
+                    <p>Développeur frontend freelance passionné par la création d'expériences web exceptionnelles.</p>
                 </div>
+                <div class="footer-section">
+                    <h4>Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="#accueil">Accueil</a></li>
+                        <li><a href="#apropos">À propos</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="#services">Création de site</a></li>
+                        <li><a href="#services">Refonte web</a></li>
+                        <li><a href="#services">Intégration Figma</a></li>
+                        <li><a href="#services">Optimisation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul class="footer-links">
+                        <li><a href="#contact">Me contacter</a></li>
+                        <li><a href="#">Mentions légales</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Samuel. Tous droits réservés.</p>
+                <p>Développé avec ❤️ par Samuel</p>
             </div>
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

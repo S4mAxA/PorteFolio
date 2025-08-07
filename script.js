@@ -1,6 +1,25 @@
+// Initialisation AOS
+AOS.init({
+    duration: 800,
+    easing: 'ease-in-out',
+    once: true,
+    offset: 100
+});
+
+// Loader
+window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    setTimeout(() => {
+        loader.classList.add('hidden');
+        setTimeout(() => {
+            loader.style.display = 'none';
+        }, 500);
+    }, 2000);
+});
+
 // Navigation mobile
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('nav-menu');
 
 hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('active');
@@ -27,29 +46,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Animation au scroll
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in-up');
-        }
-    });
-}, observerOptions);
-
-// Observer les éléments à animer
-document.addEventListener('DOMContentLoaded', () => {
-    const elementsToAnimate = document.querySelectorAll('.timeline-item, .skill-item, .education-item, .interest-category, .contact-item');
-    elementsToAnimate.forEach(el => observer.observe(el));
-});
-
 // Navbar background au scroll
 window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
+    const navbar = document.getElementById('navbar');
     if (window.scrollY > 100) {
         navbar.style.background = 'rgba(255, 255, 255, 0.98)';
         navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
@@ -59,18 +58,178 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Gestion du formulaire de contact
-const contactForm = document.querySelector('.contact-form form');
+// Mode sombre/clair
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
+
+themeToggle.addEventListener('click', () => {
+    const currentTheme = body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    
+    // Changer l'icône
+    const icon = themeToggle.querySelector('i');
+    icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+});
+
+// Charger le thème sauvegardé
+const savedTheme = localStorage.getItem('theme') || 'light';
+body.setAttribute('data-theme', savedTheme);
+const icon = themeToggle.querySelector('i');
+icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+
+// Animation de texte typing
+const typingText = document.getElementById('typing-text');
+const texts = ['expériences web interactives.', 'sites modernes.', 'applications performantes.'];
+let textIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+
+function typeText() {
+    const currentText = texts[textIndex];
+    
+    if (isDeleting) {
+        typingText.textContent = currentText.substring(0, charIndex - 1);
+        charIndex--;
+    } else {
+        typingText.textContent = currentText.substring(0, charIndex + 1);
+        charIndex++;
+    }
+    
+    let typeSpeed = isDeleting ? 50 : 100;
+    
+    if (!isDeleting && charIndex === currentText.length) {
+        typeSpeed = 2000; // Pause à la fin
+        isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        textIndex = (textIndex + 1) % texts.length;
+        typeSpeed = 500; // Pause avant de recommencer
+    }
+    
+    setTimeout(typeText, typeSpeed);
+}
+
+// Démarrer l'animation de typing après le chargement
+setTimeout(typeText, 1000);
+
+// Animation des statistiques
+function animateStats() {
+    const stats = document.querySelectorAll('.stat-number');
+    stats.forEach(stat => {
+        const target = parseInt(stat.getAttribute('data-target'));
+        let current = 0;
+        const increment = target / 50;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            stat.textContent = Math.floor(current);
+        }, 30);
+    });
+}
+
+// Observer pour déclencher l'animation des stats
+const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            animateStats();
+            statsObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.5 });
+
+const heroStats = document.querySelector('.hero-stats');
+if (heroStats) {
+    statsObserver.observe(heroStats);
+}
+
+// Filtres du portfolio
+const filterBtns = document.querySelectorAll('.filter-btn');
+const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        // Retirer la classe active de tous les boutons
+        filterBtns.forEach(b => b.classList.remove('active'));
+        // Ajouter la classe active au bouton cliqué
+        btn.classList.add('active');
+        
+        const filter = btn.getAttribute('data-filter');
+        
+        portfolioItems.forEach(item => {
+            const category = item.getAttribute('data-category');
+            
+            if (filter === 'all' || category === filter) {
+                item.classList.remove('hidden');
+                item.style.animation = 'fadeInUp 0.6s ease-out';
+            } else {
+                item.classList.add('hidden');
+            }
+        });
+    });
+});
+
+// Carousel des témoignages
+let currentSlide = 0;
+const testimonialItems = document.querySelectorAll('.testimonial-item');
+const dots = document.querySelectorAll('.dot');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+
+function showSlide(index) {
+    testimonialItems.forEach(item => item.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    testimonialItems[index].classList.add('active');
+    dots[index].classList.add('active');
+}
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % testimonialItems.length;
+    showSlide(currentSlide);
+}
+
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + testimonialItems.length) % testimonialItems.length;
+    showSlide(currentSlide);
+}
+
+// Événements pour les boutons du carousel
+if (prevBtn && nextBtn) {
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+}
+
+// Événements pour les dots
+dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        currentSlide = index;
+        showSlide(currentSlide);
+    });
+});
+
+// Auto-play du carousel
+setInterval(nextSlide, 5000);
+
+// Formulaire de contact
+const contactForm = document.getElementById('contact-form');
+
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
         // Récupération des données du formulaire
         const formData = new FormData(contactForm);
-        const name = contactForm.querySelector('input[type="text"]').value;
-        const email = contactForm.querySelector('input[type="email"]').value;
-        const subject = contactForm.querySelectorAll('input[type="text"]')[1].value;
-        const message = contactForm.querySelector('textarea').value;
+        const name = contactForm.querySelector('#name').value;
+        const email = contactForm.querySelector('#email').value;
+        const subject = contactForm.querySelector('#subject').value;
+        const message = contactForm.querySelector('#message').value;
         
         // Validation basique
         if (!name || !email || !subject || !message) {
@@ -83,9 +242,17 @@ if (contactForm) {
             return;
         }
         
-        // Simulation d'envoi (remplacer par votre logique d'envoi)
+        // Simulation d'envoi
         showNotification('Message envoyé avec succès !', 'success');
         contactForm.reset();
+        
+        // Réinitialiser les labels
+        const labels = contactForm.querySelectorAll('label');
+        labels.forEach(label => {
+            label.style.top = '1rem';
+            label.style.fontSize = '1rem';
+            label.style.color = 'var(--text-secondary)';
+        });
     });
 }
 
@@ -112,11 +279,17 @@ function showNotification(message, type = 'info') {
     `;
     
     // Styles pour la notification
+    const colors = {
+        success: '#10b981',
+        error: '#ef4444',
+        info: '#3b82f6'
+    };
+    
     notification.style.cssText = `
         position: fixed;
         top: 20px;
         right: 20px;
-        background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
+        background: ${colors[type]};
         color: white;
         padding: 1rem 1.5rem;
         border-radius: 8px;
@@ -178,68 +351,74 @@ function showNotification(message, type = 'info') {
     }, 5000);
 }
 
-// Animation des compétences au hover
-document.querySelectorAll('.skill-item').forEach(skill => {
-    skill.addEventListener('mouseenter', () => {
-        const level = skill.querySelector('.skill-level');
-        if (level) {
-            level.style.transform = 'scaleX(1.1)';
-        }
+// Animation des cartes de services
+document.querySelectorAll('.service-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-10px)';
     });
     
-    skill.addEventListener('mouseleave', () => {
-        const level = skill.querySelector('.skill-level');
-        if (level) {
-            level.style.transform = 'scaleX(1)';
-        }
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0)';
     });
 });
 
-// Animation des statistiques
-function animateStats() {
-    const stats = document.querySelectorAll('.stat-item h3');
-    stats.forEach(stat => {
-        const target = parseInt(stat.textContent);
-        let current = 0;
-        const increment = target / 50;
+// Animation des cartes du portfolio
+document.querySelectorAll('.portfolio-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-10px) scale(1.02)';
+    });
+    
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0) scale(1)';
+    });
+});
+
+// Effet de particules en arrière-plan
+function createParticles() {
+    const particlesBg = document.getElementById('particles-bg');
+    if (!particlesBg) return;
+    
+    const particleCount = 50;
+    
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            opacity: 0.3;
+            pointer-events: none;
+        `;
         
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
-            }
-            stat.textContent = Math.floor(current);
-        }, 30);
-    });
-}
-
-// Déclencher l'animation des stats quand la section est visible
-const statsSection = document.querySelector('.about-stats');
-if (statsSection) {
-    const statsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateStats();
-                statsObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-    
-    statsObserver.observe(statsSection);
-}
-
-// Effet de parallaxe pour la grille cyber
-window.addEventListener('scroll', () => {
-    const cyberGrid = document.querySelector('.cyber-grid');
-    if (cyberGrid) {
-        const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.5;
-        cyberGrid.style.transform = `translateY(${rate}px)`;
+        // Position aléatoire
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        
+        // Animation
+        particle.style.animation = `float ${3 + Math.random() * 4}s ease-in-out infinite`;
+        particle.style.animationDelay = Math.random() * 2 + 's';
+        
+        particlesBg.appendChild(particle);
     }
+}
+
+// Créer les particules après le chargement
+setTimeout(createParticles, 1000);
+
+// Animation des badges technologiques
+document.querySelectorAll('.tech-badge').forEach((badge, index) => {
+    badge.addEventListener('mouseenter', () => {
+        badge.style.transform = 'scale(1.2) rotate(10deg)';
+    });
+    
+    badge.addEventListener('mouseleave', () => {
+        badge.style.transform = 'scale(1) rotate(0deg)';
+    });
 });
 
-// Gestion des liens sociaux (à personnaliser)
+// Gestion des liens sociaux
 document.querySelectorAll('.social-link').forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
@@ -247,11 +426,13 @@ document.querySelectorAll('.social-link').forEach(link => {
         
         let url = '#';
         if (platform.includes('linkedin')) {
-            url = 'https://linkedin.com/in/votre-profil';
+            url = 'https://linkedin.com/in/samuel-dev';
         } else if (platform.includes('github')) {
-            url = 'https://github.com/votre-username';
+            url = 'https://github.com/samuel-dev';
         } else if (platform.includes('twitter')) {
-            url = 'https://twitter.com/votre-username';
+            url = 'https://twitter.com/samuel_dev';
+        } else if (platform.includes('dribbble')) {
+            url = 'https://dribbble.com/samuel-dev';
         }
         
         if (url !== '#') {
@@ -261,6 +442,16 @@ document.querySelectorAll('.social-link').forEach(link => {
         }
     });
 });
+
+// Gestion du téléchargement du CV
+const cvDownload = document.querySelector('.cv-download a');
+if (cvDownload) {
+    cvDownload.addEventListener('click', (e) => {
+        e.preventDefault();
+        showNotification('Téléchargement du CV en cours...', 'info');
+        // Ici vous pouvez ajouter la logique de téléchargement
+    });
+}
 
 // Amélioration de l'accessibilité
 document.addEventListener('keydown', (e) => {
@@ -272,176 +463,29 @@ document.addEventListener('keydown', (e) => {
             navMenu.classList.remove('active');
         }
     }
+    
+    // Navigation du carousel au clavier
+    if (e.key === 'ArrowLeft') {
+        prevSlide();
+    } else if (e.key === 'ArrowRight') {
+        nextSlide();
+    }
+});
+
+// Optimisation des performances
+window.addEventListener('scroll', () => {
+    // Throttle pour les animations au scroll
+    if (!window.scrollTimeout) {
+        window.scrollTimeout = setTimeout(() => {
+            // Code pour les animations au scroll si nécessaire
+            window.scrollTimeout = null;
+        }, 16);
+    }
 });
 
 // Gestion des erreurs
 window.addEventListener('error', (e) => {
     console.error('Erreur détectée:', e.error);
-});
-
-// Mode sombre (optionnel - à implémenter si souhaité)
-function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
-    const isDark = document.body.classList.contains('dark-mode');
-    localStorage.setItem('darkMode', isDark);
-}
-
-// Charger les préférences utilisateur
-document.addEventListener('DOMContentLoaded', () => {
-    const savedDarkMode = localStorage.getItem('darkMode');
-    if (savedDarkMode === 'true') {
-        document.body.classList.add('dark-mode');
-    }
-});
-
-// Gestion des cartes de projets
-document.addEventListener('DOMContentLoaded', () => {
-    const projectCards = document.querySelectorAll('.project-card');
-    
-    projectCards.forEach((card, index) => {
-        // Rendre les cartes visibles par défaut
-        card.classList.add('visible');
-        // Animation d'apparition avec délai
-        card.style.animationDelay = `${0.1 * (index + 1)}s`;
-        
-        // Effet de parallaxe au hover
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateY(-10px)';
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'translateY(0)';
-        });
-        
-        // Gestion des liens de projets
-        const projectLinks = card.querySelectorAll('.project-link');
-        projectLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const linkText = link.textContent.trim();
-                
-                if (linkText.includes('Voir le projet')) {
-                    showNotification('Lien vers le projet en cours de configuration', 'info');
-                } else if (linkText.includes('Code source')) {
-                    showNotification('Lien vers le code source en cours de configuration', 'info');
-                }
-            });
-        });
-        
-        // Effet de clic pour mobile (alternative au hover)
-        let touchStartY = 0;
-        let touchEndY = 0;
-        
-        card.addEventListener('touchstart', (e) => {
-            touchStartY = e.touches[0].clientY;
-        });
-        
-        card.addEventListener('touchend', (e) => {
-            touchEndY = e.changedTouches[0].clientY;
-            const touchDiff = touchStartY - touchEndY;
-            
-            // Si le swipe est vers le haut, déclencher l'effet flip
-            if (touchDiff > 50) {
-                const cardInner = card.querySelector('.card-inner');
-                cardInner.style.transform = 'rotateY(180deg) scale(1.05)';
-                
-                // Remettre à zéro après 3 secondes
-                setTimeout(() => {
-                    cardInner.style.transform = 'rotateY(0deg) scale(1)';
-                }, 3000);
-            }
-        });
-    });
-    
-    // Animation des cartes au scroll (optionnel)
-    const projectObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Les cartes sont déjà visibles par défaut
-                entry.target.classList.add('visible');
-            }
-        });
-    }, { threshold: 0.1 });
-    
-    projectCards.forEach(card => {
-        projectObserver.observe(card);
-    });
-});
-
-// Effet de particules pour les cartes (optionnel)
-function createParticleEffect(element) {
-    const particles = 10;
-    const colors = ['#2563eb', '#3b82f6', '#1e40af'];
-    
-    for (let i = 0; i < particles; i++) {
-        const particle = document.createElement('div');
-        particle.style.cssText = `
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: ${colors[Math.floor(Math.random() * colors.length)]};
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1000;
-        `;
-        
-        const rect = element.getBoundingClientRect();
-        const x = rect.left + Math.random() * rect.width;
-        const y = rect.top + Math.random() * rect.height;
-        
-        particle.style.left = x + 'px';
-        particle.style.top = y + 'px';
-        
-        document.body.appendChild(particle);
-        
-        // Animation de la particule
-        const animation = particle.animate([
-            { 
-                transform: 'translate(0, 0) scale(1)',
-                opacity: 1 
-            },
-            { 
-                transform: `translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) scale(0)`,
-                opacity: 0 
-            }
-        ], {
-            duration: 1000 + Math.random() * 1000,
-            easing: 'ease-out'
-        });
-        
-        animation.onfinish = () => {
-            particle.remove();
-        };
-    }
-}
-
-// Ajouter l'effet de particules aux cartes (optionnel)
-document.addEventListener('DOMContentLoaded', () => {
-    const projectCards = document.querySelectorAll('.project-card');
-    
-    projectCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            // Créer un effet de particules au hover (optionnel)
-            // createParticleEffect(card);
-        });
-    });
-});
-
-// Amélioration de l'accessibilité pour les cartes
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-        const focusedCard = document.querySelector('.project-card:focus');
-        if (focusedCard) {
-            const cardInner = focusedCard.querySelector('.card-inner');
-            const currentTransform = cardInner.style.transform;
-            
-            if (currentTransform.includes('rotateY(180deg)')) {
-                cardInner.style.transform = 'rotateY(0deg) scale(1)';
-            } else {
-                cardInner.style.transform = 'rotateY(180deg) scale(1.05)';
-            }
-        }
-    }
 });
 
 // Préchargement des images et optimisation
@@ -454,4 +498,92 @@ window.addEventListener('load', () => {
     images.forEach(img => {
         img.loading = 'lazy';
     });
-}); 
+});
+
+// Animation des cartes flottantes
+document.querySelectorAll('.floating-card').forEach((card, index) => {
+    card.style.animationDelay = `${index * 2}s`;
+});
+
+// Effet de parallaxe pour les cartes flottantes
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const parallaxCards = document.querySelectorAll('.floating-card');
+    
+    parallaxCards.forEach((card, index) => {
+        const speed = 0.5 + (index * 0.1);
+        const yPos = -(scrolled * speed);
+        card.style.transform = `translateY(${yPos}px)`;
+    });
+});
+
+// Animation des liens du portfolio
+document.querySelectorAll('.portfolio-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const linkText = link.textContent.trim();
+        
+        if (linkText.includes('Voir le projet')) {
+            showNotification('Lien vers le projet en cours de configuration', 'info');
+        } else if (linkText.includes('Code source') || linkText.includes('Design')) {
+            showNotification('Lien vers le code source en cours de configuration', 'info');
+        }
+    });
+});
+
+// Animation des prix des services
+document.querySelectorAll('.service-price').forEach(price => {
+    price.addEventListener('mouseenter', () => {
+        price.style.transform = 'scale(1.1)';
+        price.style.color = '#fbbf24';
+    });
+    
+    price.addEventListener('mouseleave', () => {
+        price.style.transform = 'scale(1)';
+        price.style.color = 'white';
+    });
+});
+
+// Effet de focus pour les éléments de formulaire
+document.querySelectorAll('.form-group input, .form-group textarea').forEach(input => {
+    input.addEventListener('focus', () => {
+        const label = input.nextElementSibling;
+        if (label && label.tagName === 'LABEL') {
+            label.style.top = '-0.5rem';
+            label.style.fontSize = '0.875rem';
+            label.style.color = 'var(--primary-color)';
+        }
+    });
+    
+    input.addEventListener('blur', () => {
+        const label = input.nextElementSibling;
+        if (label && label.tagName === 'LABEL' && !input.value) {
+            label.style.top = '1rem';
+            label.style.fontSize = '1rem';
+            label.style.color = 'var(--text-secondary)';
+        }
+    });
+});
+
+// Animation des étoiles de notation
+document.querySelectorAll('.testimonial-rating i').forEach((star, index) => {
+    star.addEventListener('mouseenter', () => {
+        // Colorer toutes les étoiles jusqu'à celle-ci
+        document.querySelectorAll('.testimonial-rating i').forEach((s, i) => {
+            if (i <= index) {
+                s.style.color = '#fbbf24';
+                s.style.transform = 'scale(1.2)';
+            }
+        });
+    });
+    
+    star.addEventListener('mouseleave', () => {
+        // Remettre toutes les étoiles à leur état normal
+        document.querySelectorAll('.testimonial-rating i').forEach(s => {
+            s.style.color = '#fbbf24';
+            s.style.transform = 'scale(1)';
+        });
+    });
+});
+
+console.log('Portfolio Samuel - Développeur Frontend Freelance chargé avec succès ! 🚀'); 
