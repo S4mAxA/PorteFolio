@@ -274,18 +274,6 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Préchargement des images et optimisation
-window.addEventListener('load', () => {
-    // Ajouter une classe pour indiquer que la page est chargée
-    document.body.classList.add('loaded');
-    
-    // Optimisation des performances
-    const images = document.querySelectorAll('img');
-    images.forEach(img => {
-        img.loading = 'lazy';
-    });
-});
-
 // Gestion des erreurs
 window.addEventListener('error', (e) => {
     console.error('Erreur détectée:', e.error);
@@ -304,4 +292,164 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedDarkMode === 'true') {
         document.body.classList.add('dark-mode');
     }
+});
+
+// Gestion des cartes de projets
+document.addEventListener('DOMContentLoaded', () => {
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    projectCards.forEach((card, index) => {
+        // Animation d'apparition avec délai
+        card.style.animationDelay = `${0.1 * (index + 1)}s`;
+        
+        // Effet de parallaxe au hover
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-10px)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0)';
+        });
+        
+        // Gestion des liens de projets
+        const projectLinks = card.querySelectorAll('.project-link');
+        projectLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const linkText = link.textContent.trim();
+                
+                if (linkText.includes('Voir le projet')) {
+                    showNotification('Lien vers le projet en cours de configuration', 'info');
+                } else if (linkText.includes('Code source')) {
+                    showNotification('Lien vers le code source en cours de configuration', 'info');
+                }
+            });
+        });
+        
+        // Effet de clic pour mobile (alternative au hover)
+        let touchStartY = 0;
+        let touchEndY = 0;
+        
+        card.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        });
+        
+        card.addEventListener('touchend', (e) => {
+            touchEndY = e.changedTouches[0].clientY;
+            const touchDiff = touchStartY - touchEndY;
+            
+            // Si le swipe est vers le haut, déclencher l'effet flip
+            if (touchDiff > 50) {
+                const cardInner = card.querySelector('.card-inner');
+                cardInner.style.transform = 'rotateY(180deg) scale(1.05)';
+                
+                // Remettre à zéro après 3 secondes
+                setTimeout(() => {
+                    cardInner.style.transform = 'rotateY(0deg) scale(1)';
+                }, 3000);
+            }
+        });
+    });
+    
+    // Animation des cartes au scroll
+    const projectObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    projectCards.forEach(card => {
+        projectObserver.observe(card);
+    });
+});
+
+// Effet de particules pour les cartes (optionnel)
+function createParticleEffect(element) {
+    const particles = 10;
+    const colors = ['#2563eb', '#3b82f6', '#1e40af'];
+    
+    for (let i = 0; i < particles; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+        `;
+        
+        const rect = element.getBoundingClientRect();
+        const x = rect.left + Math.random() * rect.width;
+        const y = rect.top + Math.random() * rect.height;
+        
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        
+        document.body.appendChild(particle);
+        
+        // Animation de la particule
+        const animation = particle.animate([
+            { 
+                transform: 'translate(0, 0) scale(1)',
+                opacity: 1 
+            },
+            { 
+                transform: `translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) scale(0)`,
+                opacity: 0 
+            }
+        ], {
+            duration: 1000 + Math.random() * 1000,
+            easing: 'ease-out'
+        });
+        
+        animation.onfinish = () => {
+            particle.remove();
+        };
+    }
+}
+
+// Ajouter l'effet de particules aux cartes (optionnel)
+document.addEventListener('DOMContentLoaded', () => {
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    projectCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            // Créer un effet de particules au hover (optionnel)
+            // createParticleEffect(card);
+        });
+    });
+});
+
+// Amélioration de l'accessibilité pour les cartes
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+        const focusedCard = document.querySelector('.project-card:focus');
+        if (focusedCard) {
+            const cardInner = focusedCard.querySelector('.card-inner');
+            const currentTransform = cardInner.style.transform;
+            
+            if (currentTransform.includes('rotateY(180deg)')) {
+                cardInner.style.transform = 'rotateY(0deg) scale(1)';
+            } else {
+                cardInner.style.transform = 'rotateY(180deg) scale(1.05)';
+            }
+        }
+    }
+});
+
+// Préchargement des images et optimisation
+window.addEventListener('load', () => {
+    // Ajouter une classe pour indiquer que la page est chargée
+    document.body.classList.add('loaded');
+    
+    // Optimisation des performances
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+        img.loading = 'lazy';
+    });
 }); 
