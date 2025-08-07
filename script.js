@@ -221,7 +221,7 @@ class MatrixEffect {
         this.ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
-        this.ctx.fillStyle = '#00ff00';
+        this.ctx.fillStyle = '#8b5cf6';
         this.ctx.font = `${this.fontSize}px monospace`;
         
         for (let i = 0; i < this.drops.length; i++) {
