@@ -52,9 +52,7 @@
                 <li class="nav-item">
                     <a href="#portfolio" class="nav-link">Portfolio</a>
                 </li>
-                <li class="nav-item">
-                    <a href="#temoignages" class="nav-link">Avis</a>
-                </li>
+
                 <li class="nav-item">
                     <a href="#contact" class="nav-link">Contact</a>
                 </li>
@@ -74,7 +72,9 @@
 
     <!-- Hero Section -->
     <section id="accueil" class="hero">
-        <div class="particles-bg" id="particles-bg"></div>
+        <div class="matrix-bg" id="matrix-bg">
+            <canvas class="matrix-canvas" id="matrix-canvas"></canvas>
+        </div>
         <div class="hero-container">
             <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
                 <div class="hero-badge">
@@ -115,23 +115,21 @@
                 </div>
             </div>
             <div class="hero-visual" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="300">
-                <div class="floating-card">
-                    <div class="card-content">
-                        <i class="fas fa-code"></i>
-                        <span>Code propre</span>
-                    </div>
+                <div class="floating-sphere" id="floating-sphere"></div>
+                <div class="floating-element">
+                    <i class="fas fa-code"></i>
                 </div>
-                <div class="floating-card">
-                    <div class="card-content">
-                        <i class="fas fa-mobile-alt"></i>
-                        <span>Responsive</span>
-                    </div>
+                <div class="floating-element">
+                    <i class="fas fa-mobile-alt"></i>
                 </div>
-                <div class="floating-card">
-                    <div class="card-content">
-                        <i class="fas fa-bolt"></i>
-                        <span>Performance</span>
-                    </div>
+                <div class="floating-element">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div class="floating-element">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="floating-element">
+                    <i class="fas fa-rocket"></i>
                 </div>
             </div>
         </div>
@@ -438,105 +436,7 @@
         </div>
     </section>
 
-    <!-- Section Témoignages -->
-    <section id="temoignages" class="testimonials">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">Avis Clients</h2>
-                <p class="section-subtitle">Ce que disent mes clients</p>
-            </div>
-            <div class="testimonials-carousel" data-aos="fade-up" data-aos-delay="200">
-                <div class="testimonial-item active">
-                    <div class="testimonial-content">
-                        <div class="testimonial-avatar">
-                            <div class="avatar-placeholder">
-                                <i class="fas fa-user"></i>
-                            </div>
-                        </div>
-                        <p class="testimonial-text">
-                            "Samuel a transformé notre vision en un site web exceptionnel. 
-                            Son attention aux détails et sa créativité ont dépassé nos attentes. 
-                            Le résultat est moderne, rapide et parfaitement fonctionnel."
-                        </p>
-                        <div class="testimonial-author">
-                            <h4>Marie Dubois</h4>
-                            <span>CEO, TechStart</span>
-                        </div>
-                        <div class="testimonial-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-item">
-                    <div class="testimonial-content">
-                        <div class="testimonial-avatar">
-                            <div class="avatar-placeholder">
-                                <i class="fas fa-user"></i>
-                            </div>
-                        </div>
-                        <p class="testimonial-text">
-                            "Excellent travail de refonte de notre site. Samuel a su comprendre 
-                            nos besoins et livrer un projet de qualité dans les délais. 
-                            Je recommande vivement ses services !"
-                        </p>
-                        <div class="testimonial-author">
-                            <h4>Thomas Martin</h4>
-                            <span>Directeur Marketing, InnovCorp</span>
-                        </div>
-                        <div class="testimonial-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-item">
-                    <div class="testimonial-content">
-                        <div class="testimonial-avatar">
-                            <div class="avatar-placeholder">
-                                <i class="fas fa-user"></i>
-                            </div>
-                        </div>
-                        <p class="testimonial-text">
-                            "Samuel est un professionnel de talent. Son expertise technique 
-                            et sa créativité ont permis de créer un site qui nous représente 
-                            parfaitement. Un partenaire de confiance !"
-                        </p>
-                        <div class="testimonial-author">
-                            <h4>Sophie Laurent</h4>
-                            <span>Fondatrice, CreativeStudio</span>
-                        </div>
-                        <div class="testimonial-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-controls">
-                <button class="carousel-btn prev" id="prev-btn">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="carousel-dots">
-                    <span class="dot active" data-slide="0"></span>
-                    <span class="dot" data-slide="1"></span>
-                    <span class="dot" data-slide="2"></span>
-                </div>
-                <button class="carousel-btn next" id="next-btn">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-    </section>
+
 
     <!-- Section Contact -->
     <section id="contact" class="contact">

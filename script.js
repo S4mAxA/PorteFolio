@@ -175,47 +175,93 @@ filterBtns.forEach(btn => {
     });
 });
 
-// Carousel des témoignages
-let currentSlide = 0;
-const testimonialItems = document.querySelectorAll('.testimonial-item');
-const dots = document.querySelectorAll('.dot');
-const prevBtn = document.getElementById('prev-btn');
-const nextBtn = document.getElementById('next-btn');
-
-function showSlide(index) {
-    testimonialItems.forEach(item => item.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
+// Effet Matrix
+class MatrixEffect {
+    constructor() {
+        this.canvas = document.getElementById('matrix-canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?';
+        this.drops = [];
+        this.fontSize = 14;
+        this.columns = 0;
+        this.isHovered = false;
+        
+        this.init();
+    }
     
-    testimonialItems[index].classList.add('active');
-    dots[index].classList.add('active');
+    init() {
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+        
+        // Gestion du hover
+        const matrixBg = document.getElementById('matrix-bg');
+        matrixBg.addEventListener('mouseenter', () => {
+            this.isHovered = true;
+        });
+        
+        matrixBg.addEventListener('mouseleave', () => {
+            this.isHovered = false;
+        });
+        
+        this.animate();
+    }
+    
+    resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.columns = Math.floor(this.canvas.width / this.fontSize);
+        this.drops = [];
+        
+        for (let i = 0; i < this.columns; i++) {
+            this.drops[i] = 1;
+        }
+    }
+    
+    animate() {
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        this.ctx.fillStyle = '#00ff00';
+        this.ctx.font = `${this.fontSize}px monospace`;
+        
+        for (let i = 0; i < this.drops.length; i++) {
+            const text = this.characters.charAt(Math.floor(Math.random() * this.characters.length));
+            const x = i * this.fontSize;
+            const y = this.drops[i] * this.fontSize;
+            
+            // Effet de dispersion au hover
+            if (this.isHovered) {
+                const offsetX = (Math.random() - 0.5) * 20;
+                const offsetY = (Math.random() - 0.5) * 20;
+                this.ctx.fillText(text, x + offsetX, y + offsetY);
+            } else {
+                this.ctx.fillText(text, x, y);
+            }
+            
+            if (y > this.canvas.height && Math.random() > 0.975) {
+                this.drops[i] = 0;
+            }
+            
+            this.drops[i]++;
+        }
+        
+        requestAnimationFrame(() => this.animate());
+    }
 }
 
-function nextSlide() {
-    currentSlide = (currentSlide + 1) % testimonialItems.length;
-    showSlide(currentSlide);
-}
+// Initialiser l'effet Matrix
+const matrixEffect = new MatrixEffect();
 
-function prevSlide() {
-    currentSlide = (currentSlide - 1 + testimonialItems.length) % testimonialItems.length;
-    showSlide(currentSlide);
-}
-
-// Événements pour les boutons du carousel
-if (prevBtn && nextBtn) {
-    prevBtn.addEventListener('click', prevSlide);
-    nextBtn.addEventListener('click', nextSlide);
-}
-
-// Événements pour les dots
-dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-        currentSlide = index;
-        showSlide(currentSlide);
+// Animation de la sphère 3D
+const floatingSphere = document.getElementById('floating-sphere');
+if (floatingSphere) {
+    floatingSphere.addEventListener('click', () => {
+        floatingSphere.style.transform = 'scale(1.2) rotateY(360deg)';
+        setTimeout(() => {
+            floatingSphere.style.transform = '';
+        }, 1000);
     });
-});
-
-// Auto-play du carousel
-setInterval(nextSlide, 5000);
+}
 
 // Formulaire de contact
 const contactForm = document.getElementById('contact-form');
@@ -373,40 +419,6 @@ document.querySelectorAll('.portfolio-card').forEach(card => {
     });
 });
 
-// Effet de particules en arrière-plan
-function createParticles() {
-    const particlesBg = document.getElementById('particles-bg');
-    if (!particlesBg) return;
-    
-    const particleCount = 50;
-    
-    for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.style.cssText = `
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            opacity: 0.3;
-            pointer-events: none;
-        `;
-        
-        // Position aléatoire
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.top = Math.random() * 100 + '%';
-        
-        // Animation
-        particle.style.animation = `float ${3 + Math.random() * 4}s ease-in-out infinite`;
-        particle.style.animationDelay = Math.random() * 2 + 's';
-        
-        particlesBg.appendChild(particle);
-    }
-}
-
-// Créer les particules après le chargement
-setTimeout(createParticles, 1000);
-
 // Animation des badges technologiques
 document.querySelectorAll('.tech-badge').forEach((badge, index) => {
     badge.addEventListener('mouseenter', () => {
@@ -463,13 +475,6 @@ document.addEventListener('keydown', (e) => {
             navMenu.classList.remove('active');
         }
     }
-    
-    // Navigation du carousel au clavier
-    if (e.key === 'ArrowLeft') {
-        prevSlide();
-    } else if (e.key === 'ArrowRight') {
-        nextSlide();
-    }
 });
 
 // Optimisation des performances
@@ -500,20 +505,18 @@ window.addEventListener('load', () => {
     });
 });
 
-// Animation des cartes flottantes
-document.querySelectorAll('.floating-card').forEach((card, index) => {
-    card.style.animationDelay = `${index * 2}s`;
-});
-
-// Effet de parallaxe pour les cartes flottantes
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const parallaxCards = document.querySelectorAll('.floating-card');
+// Animation des éléments flottants
+document.querySelectorAll('.floating-element').forEach((element, index) => {
+    element.style.animationDelay = `${index * 2}s`;
     
-    parallaxCards.forEach((card, index) => {
-        const speed = 0.5 + (index * 0.1);
-        const yPos = -(scrolled * speed);
-        card.style.transform = `translateY(${yPos}px)`;
+    element.addEventListener('mouseenter', () => {
+        element.style.transform = 'scale(1.5) rotate(360deg)';
+        element.style.opacity = '1';
+    });
+    
+    element.addEventListener('mouseleave', () => {
+        element.style.transform = '';
+        element.style.opacity = '';
     });
 });
 
@@ -565,25 +568,36 @@ document.querySelectorAll('.form-group input, .form-group textarea').forEach(inp
     });
 });
 
-// Animation des étoiles de notation
-document.querySelectorAll('.testimonial-rating i').forEach((star, index) => {
-    star.addEventListener('mouseenter', () => {
-        // Colorer toutes les étoiles jusqu'à celle-ci
-        document.querySelectorAll('.testimonial-rating i').forEach((s, i) => {
-            if (i <= index) {
-                s.style.color = '#fbbf24';
-                s.style.transform = 'scale(1.2)';
-            }
-        });
-    });
+// Effet de parallaxe pour les éléments flottants
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const parallaxElements = document.querySelectorAll('.floating-element');
     
-    star.addEventListener('mouseleave', () => {
-        // Remettre toutes les étoiles à leur état normal
-        document.querySelectorAll('.testimonial-rating i').forEach(s => {
-            s.style.color = '#fbbf24';
-            s.style.transform = 'scale(1)';
-        });
+    parallaxElements.forEach((element, index) => {
+        const speed = 0.5 + (index * 0.1);
+        const yPos = -(scrolled * speed);
+        element.style.transform = `translateY(${yPos}px)`;
     });
 });
 
-console.log('Portfolio Samuel - Développeur Frontend Freelance chargé avec succès ! 🚀'); 
+// Animation des éléments au scroll
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Observer les éléments à animer
+document.querySelectorAll('.service-card, .portfolio-item, .contact-item').forEach(el => {
+    scrollObserver.observe(el);
+});
+
+console.log('Portfolio Samuel - Développeur Frontend Freelance avec effet Matrix chargé avec succès ! 🚀'); 
