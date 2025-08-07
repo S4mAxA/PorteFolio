@@ -58,27 +58,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Mode sombre/clair
-const themeToggle = document.getElementById('theme-toggle');
-const body = document.body;
 
-themeToggle.addEventListener('click', () => {
-    const currentTheme = body.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    
-    body.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    
-    // Changer l'icône
-    const icon = themeToggle.querySelector('i');
-    icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-});
-
-// Charger le thème sauvegardé
-const savedTheme = localStorage.getItem('theme') || 'light';
-body.setAttribute('data-theme', savedTheme);
-const icon = themeToggle.querySelector('i');
-icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
 
 // Animation de texte typing
 const typingText = document.getElementById('typing-text');
@@ -434,23 +414,9 @@ document.querySelectorAll('.tech-badge').forEach((badge, index) => {
 document.querySelectorAll('.social-link').forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
-        const platform = link.querySelector('i').className;
-        
-        let url = '#';
-        if (platform.includes('linkedin')) {
-            url = 'https://linkedin.com/in/samuel-dev';
-        } else if (platform.includes('github')) {
-            url = 'https://github.com/samuel-dev';
-        } else if (platform.includes('twitter')) {
-            url = 'https://twitter.com/samuel_dev';
-        } else if (platform.includes('dribbble')) {
-            url = 'https://dribbble.com/samuel-dev';
-        }
-        
-        if (url !== '#') {
-            window.open(url, '_blank');
-        } else {
-            showNotification('Lien en cours de configuration', 'info');
+        const href = link.getAttribute('href');
+        if (href && href !== '#') {
+            window.open(href, '_blank');
         }
     });
 });
